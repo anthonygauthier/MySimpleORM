@@ -58,7 +58,7 @@ class your_class extends BaseClass {
 #### To select an object by its ID
 ```php
 $Users = new Users();
-$Users = $Users->findById(1);
+$Users = $Users->findObjectById(1);
 ```
 You've retrieved the user "1" from the table "Users" and can now use it as an object.
 
@@ -74,6 +74,17 @@ $wheres = array(
 );
 $Users = $Users->getObjectArray($wheres);
 ```
+
+#### To retrieve current object, depending on what you've already set
+Assuming the database contains a```Users``` with the name "foo".
+```php
+
+$Users = new Users();
+$Users->setName("foo");
+$Users = $Users->getCurrentObject();
+
+//The mapper returned the object User named "foo"
+```
 You've just retrieved all the users that were part of the company "1". You're object ```$Users``` is now an array of ```Users``` 
 
 ### Insert
@@ -81,7 +92,7 @@ Inserting an object couldn't be any easier.
 ```php
 $Users = new $Users();
 $Users->setName("foo");
-$Users->insert();
+$Users->insertObject();
 ```
 There you go, a new User has been added to your database.
 
@@ -90,10 +101,10 @@ Updating an object is just as simple as inserting it.
 ```php
 $Users = new $Users();
 $Users->setName("foo");
-$Users->insert();
+$Users->insertObject();
 
 $Users->setName("bar");
-$Users->update();
+$Users->updateObject();
 
 //The newly added "foo" is now "bar"
 ```
@@ -103,12 +114,12 @@ And now let's delete "bar" from the database.
 ```php
 $Users = new $Users();
 $Users->setName("foo");
-$Users->insert();
+$Users->insertObject();
 
 $Users->setName("bar");
-$Users->update();
+$Users->updateObject();
 
-$Users->delete();
+$Users->deleteObject();
 
 //The newly updated "bar" is now deleted from the db
 ```
