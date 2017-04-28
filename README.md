@@ -1,22 +1,24 @@
 # MySimpleORM
 MySimpleORM is a simple PHP/MySQL Object-relational mapping library. It started out as a personal and educational project, but turned into this little project you see here.
 
-## Documentation
+## Setting up MySimpleORM (MsORM)
 
-Still in the writing process!
+To be able to use the ORM, you need to have a PHP application and a MySQL database. Follow these simple guidelines to setup MsORM on your PHP web application.
 
-## Requirements
+### Database-side guidelines
 
-To be able to use the ORM, you need to have a PHP application and a MySQL database. The requirements are quite simple. Create your object classes following this simple guideline.
+1. The names of your table are going to be the names of your object classes in PHP. Therefore, a table named "Users" will refer to the class "Users".
+2. Make sure that your primary keys all start with "ID". For instance; "IDUsers".
 
-1. Your PHP class must have the same name as your table. For instance; to be able to use your class "Users" you must have a table named "Users" in your MySQL schema.
-2. Make sure to require the "BaseClass.php" file in your class and then extend your class with it.
+### Application-side setup
+
+1. Make sure to "require" the "BaseClass.php" file in your class file and then extend your class with it.
 3. Make sure that your class attributes are all equivalent to your table columns and ensure that they all have the same name.
 4. Create your getters/setters.
-5. Read the documentation (soon to be available) to understand how to select/update/delete/insert objects to your DB.
+5. Read the (short) documentation to understand how to select/update/delete/insert objects to your DB.
 6. Don't forget to modify the "Database.php" class with your database information.
 
-### Example of a class
+#### Example of a class
 
 ```php
 require_once("BaseClass.php");
@@ -42,9 +44,71 @@ class your_class extends BaseClass {
   public setName($id) {
     $this->IDyour_class = $id;  
   }
- 
+
   public setName($n) {
     $this->Name = $n;  
   }
 }
+```
+
+## Documentation
+*The examples below are all used as if they were part of a function within a controller.
+
+### Select
+#### To select an object by its ID
+```php
+$Users = new Users();
+$Users = $Users->findById(1);
+```
+You've retrieved the user "1" from the table "Users" and can now use it as an object.
+
+#### To retrieve an array of objects
+```php
+
+$Users = new Users();
+//replace by whatever condition you desire
+$wheres = array(
+    "column" => "IDCompanies",
+    "condition" => "=",
+    "value" => 1 //keep in mind you could use a sub-query here
+);
+$Users = $Users->getObjectArray($wheres);
+```
+You've just retrieved all the users that were part of the company "1". You're object ```$Users``` is now an array of ```Users``` 
+
+### Insert
+Inserting an object couldn't be any easier.
+```php
+$Users = new $Users();
+$Users->setName("foo");
+$Users->insert();
+```
+There you go, a new User has been added to your database.
+
+### Update
+Updating an object is just as simple as inserting it.
+```php
+$Users = new $Users();
+$Users->setName("foo");
+$Users->insert();
+
+$Users->setName("bar");
+$Users->update();
+
+//The newly added "foo" is now "bar"
+```
+### Delete
+
+And now let's delete "bar" from the database.
+```php
+$Users = new $Users();
+$Users->setName("foo");
+$Users->insert();
+
+$Users->setName("bar");
+$Users->update();
+
+$Users->delete();
+
+//The newly updated "bar" is now deleted from the db
 ```
