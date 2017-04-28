@@ -16,7 +16,7 @@ To be able to use the ORM, you need to have a PHP application and a MySQL databa
 5. Read the documentation (soon to be available) to understand how to select/update/delete/insert objects to your DB.
 6. Don't forget to modify the "Database.php" class with your database information.
 
-## Example of a class
+### Example of a class
 
 ```php
 require_once("BaseClass.php");
