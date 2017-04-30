@@ -74,6 +74,7 @@ $wheres = array(
 );
 $Users = $Users->getObjectArray($wheres);
 ```
+You've just retrieved all the users that were part of the company "1". You're object ```$Users``` is now an array of ```Users```
 
 #### To retrieve current object, depending on what you've already set
 Assuming the database contains a```Users``` with the name "foo".
@@ -84,8 +85,7 @@ $Users->setName("foo");
 $Users = $Users->getCurrentObject();
 
 //The mapper returned the object User named "foo"
-```
-You've just retrieved all the users that were part of the company "1". You're object ```$Users``` is now an array of ```Users``` 
+``` 
 
 ### Insert
 Inserting an object couldn't be any easier.
