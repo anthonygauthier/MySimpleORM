@@ -68,9 +68,11 @@ You've retrieved the user "1" from the table "Users" and can now use it as an ob
 $Users = new Users();
 //replace by whatever condition you desire
 $wheres = array(
+  array (
     "column" => "IDCompanies",
     "condition" => "=",
     "value" => 1 //keep in mind you could use a sub-query here
+  )
 );
 $Users = $Users->getObjectArray($wheres);
 ```
