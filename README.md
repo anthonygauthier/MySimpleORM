@@ -13,7 +13,7 @@ To be able to use the ORM, you need to have a PHP application and a MySQL databa
 ### Database-side guidelines
 
 1. The names of your table are going to be the names of your object classes in PHP. Therefore, a table named "Users" will refer to the class "Users".
-2. Make sure that your primary keys all start with "ID". For instance; "IDUsers".
+2. Make sure that your primary keys all start with "ID" following by the table's name. For instance; "IDUsers". (For simplicity's sake; bound to change, might just go and search for the primary key instead)
 
 ### Application-side setup
 
