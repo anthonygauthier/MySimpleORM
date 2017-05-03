@@ -230,12 +230,6 @@
                     //If object contains other objects
                     if(strpos($key, "ID") !== false && $key != "ID".$className) {
                         $linkedClassName = str_replace("ID", "", $key);
-
-                        /** VERY SPECIFIC TO WORKERTRACKER **/
-                        if(strpos($linkedClassName, "Current") !== false) {
-                            $linkedClassName = str_replace("Current", "", $linkedClassName);
-                        }
-
                         $objectToPush = new $linkedClassName();
                         $objectToPush = $objectToPush->findObjectById($row[$key]);
                         $obj->$setterName($objectToPush);
