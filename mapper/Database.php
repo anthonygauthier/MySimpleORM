@@ -113,7 +113,7 @@
                 //JOINS
                 if($joins != "" || $joins != null) {
                     foreach($joins as $join) {
-                        $this->Sql .= $join["orientation"] . " JOIN " . $join["referenced_table"] . " ON " . $join["table_name"] . "." . $join["column_name"] . " = " . $join["referenced_table"] . "." . $join["referenced_column"];
+                        $this->Sql .= ' ' . $join["orientation"] . " JOIN " . $join["referenced_table"] . " ON " . $join["table_name"] . "." . $join["column_name"] . " = " . $join["referenced_table"] . "." . $join["referenced_column"];
                     }
                 }
 
@@ -165,7 +165,7 @@
                 array_walk_recursive($return, function(&$item, $key){
 					$item = html_entity_decode(utf8_decode($item));
 				});
-
+                
                 $this->disconnect();
                 
                 return $return;
@@ -321,7 +321,7 @@
                         //if string format SQL
                         if(gettype($where["value"]) == "string" && !is_numeric($where["value"])) {
                             $where["value"] = "'".$where["value"]."'";
-                            $where["value"] = htmlentities(utf8_encode($where["value"]));
+                            $where["value"] = trim(htmlentities(utf8_encode($where["value"])));
                             $where["condition"] = "LIKE";
                         } 
 

@@ -1,10 +1,10 @@
 <?php
     /*
-    * Author      : Anthony Gauthier
-    * Owner       : Anthony Gauthier
+    * Author      : Anthony Gautthier
+    * Owner       : Anthony Gauthtier
     * Date created  : 2017-04-04
-    * Date modified : 2017-04-04
-    * Software    : YOUR PROJECT
+    * Date modified : 2017-05-02
+    * Software    : YOUR_PROJECT
     * File        : BaseClass.php
     * Description : Class that detains all the basic find/delete/insert/update for any given object
     */
@@ -44,9 +44,9 @@
             return $mappedObject;
         }
 
-        public function getObjectArray() {
+        public function getObjectArray($wheres=null) {
             $objectArray = array();
-            $objectArray = $this->Mapper->getObjectArray();
+            $objectArray = $this->Mapper->getObjectArray($wheres);
 
             return $objectArray;
         }

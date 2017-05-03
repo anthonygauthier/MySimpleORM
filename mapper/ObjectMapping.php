@@ -22,7 +22,6 @@
         protected $Database;
         protected $Table;
         protected $Object;
-        protected $TableJoins;
 
         /**
          * ObjectMapping::__construct()
@@ -36,8 +35,6 @@
             $this->Database = new Database();
             $this->Table = $t;
             $this->Object = $o;
-            $this->TableJoins = null;
-            // $this->TableJoins = $this->Database->getJoinsArray($this->Table);
         }
 
         public function __destruct() {}
@@ -59,7 +56,7 @@
             
             if($this->Database->connect()) {
                 $rows = array();
-                $rows = $this->Database->select($this->Table, null, $where, $this->TableJoins);
+                $rows = $this->Database->select($this->Table, null, $where, $this->Database->getJoinsArray($this->Table));
                 $this->mapObject($this->Object, $rows);
 
                 return $this->Object;
@@ -77,7 +74,7 @@
             $className = get_class($this->Object);
 
             if($this->Database->connect()) {
-                $rows = $this->Database->select($this->Table, null, $wheres, $this->TableJoins);
+                $rows = $this->Database->select($this->Table, null, $wheres, $this->Database->getJoinsArray($this->Table));
                 $this->mapObject($this->Object, $rows, $return);
             }
 
@@ -120,7 +117,7 @@
             }
 
             if($this->Database->connect()) {
-                $row = $this->Database->select($this->Table, null, $wheres, $this->TableJoins);
+                $row = $this->Database->select($this->Table, null, $wheres, $this->Database->getJoinsArray($this->Table));
                 $this->mapObject($this->Object, $row);
             }
 
@@ -226,8 +223,6 @@
             foreach($rows as $row) {
                 $className = get_class($obj);
                 $this->Object = new $className();
-
-                
 
                 foreach($attributes as $key=>$attribute) {
                     $setterName = "set".$key;
