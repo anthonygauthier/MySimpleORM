@@ -1,6 +1,11 @@
 # MySimpleORM
 MySimpleORM is a simple PHP/MySQL Object-relational mapping library. It started out as a personal and educational project, but turned into this little project you see here.
 
+* Straightforward usage, very simple as long as you follow the guidelines below.
+* If your database contains foreign keys, the database abstraction layer will find them and add the joins to the query.
+* Contains a method to echo your object as JSON, very useful for AJAX requests.
+* Effective against SQL injections.
+
 ## Setting up MySimpleORM (MsORM)
 
 To be able to use the ORM, you need to have a PHP application and a MySQL database. Follow these simple guidelines to setup MsORM on your PHP web application.
