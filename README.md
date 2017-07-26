@@ -88,39 +88,18 @@ $Users = $Users->getCurrentObject();
 //The mapper returned the object User named "foo"
 ``` 
 
-### Insert
-Inserting an object couldn't be any easier.
+### Insert / Update / Delete
+Inserting, updating or deleting an object is very simple. All you need to do is call a few functions!
 ```php
-$Users = new $Users();
-$Users->setName("foo");
-$Users->insertObject();
-```
-There you go, a new User has been added to your database.
-
-### Update
-Updating an object is just as simple as inserting it.
-```php
+//Insert
 $Users = new $Users();
 $Users->setName("foo");
 $Users->insertObject();
 
+//Update
 $Users->setName("bar");
 $Users->updateObject();
 
-//The newly added "foo" is now "bar"
-```
-### Delete
-
-And now let's delete "bar" from the database.
-```php
-$Users = new $Users();
-$Users->setName("foo");
-$Users->insertObject();
-
-$Users->setName("bar");
-$Users->updateObject();
-
+//Delete
 $Users->deleteObject();
-
-//The newly updated "bar" is now deleted from the db
 ```
