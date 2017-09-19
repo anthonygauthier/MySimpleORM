@@ -28,7 +28,7 @@ class your_class extends BaseClass {
   public $Name;
 
   public __construct() {
-    parent::__construct(get_class($this), $this);
+    parent::__construct($this);
     $this->IDyour_class = 0;
     $this->Name = "";
   }
