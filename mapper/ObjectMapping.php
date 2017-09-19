@@ -29,11 +29,11 @@
          * @param [string] $t
          * @param [object] $o
          */
-        public function __construct($t, $o) {
+        public function __construct($o) {
             $className = get_class($o);
 
             $this->Database = new Database();
-            $this->Table = $t;
+            $this->Table = $className;
             $this->Object = $o;
         }
 
