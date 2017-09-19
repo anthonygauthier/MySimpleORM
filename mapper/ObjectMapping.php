@@ -22,6 +22,7 @@
         protected $Database;
         protected $Table;
         protected $Object;
+        protected $ClassName
 
         /**
          * ObjectMapping::__construct()
@@ -30,10 +31,9 @@
          * @param [object] $o
          */
         public function __construct($o) {
-            $className = get_class($o);
-
+            $this->ClassName = get_class($o);
             $this->Database = new Database();
-            $this->Table = $className;
+            $this->Table = get_class($o);
             $this->Object = $o;
         }
 
@@ -71,7 +71,6 @@
         public function getObjectArray($wheres=null) {
             $return = array();
             $rows = array();
-            $className = get_class($this->Object);
 
             if($this->Database->connect()) {
                 $rows = $this->Database->select($this->Table, null, $wheres, $this->Database->getJoinsArray($this->Table));
@@ -103,10 +102,9 @@
                 
             $objectAttributes = $this->Object->getObjectAttributes($obj);
             $wheres = array(); 
-            $className = get_class($this->Object);
 
             foreach($objectAttributes as $attributeName=>$attributeValue) {
-                if(($attributeName != "ID".$className) && ($attributeValue != null || $attributeValue != 0 || $attributeValue != "")) {
+                if(($attributeName != "ID".$this->ClassName) && ($attributeValue != null || $attributeValue != 0 || $attributeValue != "")) {
                     array_push($wheres, array(
                         "column" => $attributeName,
                         "value" => $attributeValue,
@@ -157,8 +155,7 @@
         public function updateObject($obj=null) {
             if($obj != null)
                 $this->Object = $obj;
-
-            $className  = get_class($this->Object);
+            
             $getterName = "getID" . $className;
             $objectID   = $this->Object->$getterName();
             $columns    = array();
@@ -174,7 +171,7 @@
             $objectAttributes = $this->Object->getObjectAttributes($obj); 
 
             foreach($objectAttributes as $attributeName=>$attributeValue) {
-                if($attributeName != "ID".$className) {
+                if($attributeName != "ID".$this->ClassName) {
                     $getterName = "get" . $attributeName;
 
                     array_push($columns, $attributeName);
@@ -195,7 +192,6 @@
             if($obj != null)
                 $this->Object = $obj;
                 
-            $className  = get_class($this->Object);
             $getterName = "getID" . $className;
             $objectID   = $obj->$getterName();
             $where      = array(
@@ -222,13 +218,13 @@
             
             foreach($rows as $row) {
                 $className = get_class($obj);
-                $this->Object = new $className();
+                $this->Object = new $this->ClassName;
 
                 foreach($attributes as $key=>$attribute) {
                     $setterName = "set".$key;
 
                     //If object contains other objects
-                    if(strpos($key, "ID") !== false && $key != "ID".$className) {
+                    if(strpos($key, "ID") !== false && $key != "ID".$this->ClassName) {
                         $linkedClassName = str_replace("ID", "", $key);
 
                         /** VERY SPECIFIC TO WORKERTRACKER **/
