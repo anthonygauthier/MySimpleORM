@@ -156,7 +156,7 @@
             if($obj != null)
                 $this->Object = $obj;
             
-            $getterName = "getID" . $className;
+            $getterName = "getID" . $this->ClassName();
             $objectID   = $this->Object->$getterName();
             $columns    = array();
             $values     = array();
@@ -192,7 +192,7 @@
             if($obj != null)
                 $this->Object = $obj;
                 
-            $getterName = "getID" . $className;
+            $getterName = "getID" . $this->ClassName();
             $objectID   = $obj->$getterName();
             $where      = array(
                 array(
@@ -217,8 +217,7 @@
             $attributes = $obj->getObjectAttributes($obj);
             
             foreach($rows as $row) {
-                $className = get_class($obj);
-                $this->Object = new $this->ClassName;
+                $this->Object = new $this->ClassName();
 
                 foreach($attributes as $key=>$attribute) {
                     $setterName = "set".$key;
@@ -226,12 +225,6 @@
                     //If object contains other objects
                     if(strpos($key, "ID") !== false && $key != "ID".$this->ClassName) {
                         $linkedClassName = str_replace("ID", "", $key);
-
-                        /** VERY SPECIFIC TO WORKERTRACKER **/
-                        if(strpos($linkedClassName, "Current") !== false) {
-                            $linkedClassName = str_replace("Current", "", $linkedClassName);
-                        }
-
                         $objectToPush = new $linkedClassName();
                         $objectToPush = $objectToPush->findObjectById($row[$key]);
                         $obj->$setterName($objectToPush);
