@@ -21,6 +21,7 @@
          * @var [mysqli] $Instance
          */
         protected $Host;
+	protected $MysqlPort;
         protected $Database;
         protected $User;
         protected $Sql;
@@ -36,6 +37,7 @@
             $this->User = "MYSQL_USER";
             $this->Password = "MYSQL_PASSWORD";
             $this->Database = "MYSQL_DATABASE";
+	    $this->MysqlPort = "3306";
         }
 
         public function __destruct() {}
@@ -48,7 +50,7 @@
          */
         public function connect() {
             
-            $con = mysqli_connect($this->Host, $this->User, $this->Password, $this->Database, "3306");
+            $con = mysqli_connect($this->Host, $this->User, $this->Password, $this->Database, $this->MysqlPort);
 
             if(mysqli_connect_errno()) {
                 die($this->getError());
