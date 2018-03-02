@@ -16,11 +16,9 @@
          * Variables
          * 
          * @var [Database] $Database
-         * @var [string] $Table
          * @var [object] $Object
          */
         protected $Database;
-        protected $Table;
         protected $Object;
         protected $ClassName
 
@@ -33,7 +31,6 @@
         public function __construct($o) {
             $this->ClassName = get_class($o);
             $this->Database = new Database();
-            $this->Table = get_class($o);
             $this->Object = $o;
         }
 
@@ -48,7 +45,7 @@
         public function findById($id) {
             $where = array(
                 array(
-                    "column" => "ID".$this->Table,
+                    "column" => "ID".$this->ClassName,
                     "value" => $id,
                     "condition" => "="
                 )
@@ -56,7 +53,7 @@
             
             if($this->Database->connect()) {
                 $rows = array();
-                $rows = $this->Database->select($this->Table, null, $where, $this->Database->getJoinsArray($this->Table));
+                $rows = $this->Database->select($this->ClassName, null, $where, $this->Database->getJoinsArray($this->ClassName));
                 $this->mapObject($this->Object, $rows);
 
                 return $this->Object;
@@ -73,7 +70,7 @@
             $rows = array();
 
             if($this->Database->connect()) {
-                $rows = $this->Database->select($this->Table, null, $wheres, $this->Database->getJoinsArray($this->Table));
+                $rows = $this->Database->select($this->ClassName, null, $wheres, $this->Database->getJoinsArray($this->ClassName));
                 $this->mapObject($this->Object, $rows, $return);
             }
 
@@ -115,7 +112,7 @@
             }
 
             if($this->Database->connect()) {
-                $row = $this->Database->select($this->Table, null, $wheres, $this->Database->getJoinsArray($this->Table));
+                $row = $this->Database->select($this->ClassName, null, $wheres, $this->Database->getJoinsArray($this->ClassName));
                 $this->mapObject($this->Object, $row);
             }
 
@@ -143,7 +140,7 @@
                 array_push($values , $this->Object->$getterName());
             }
 
-            $this->Database->insert($this->Table, $columns, $values);
+            $this->Database->insert($this->ClassName, $columns, $values);
         }
 
         /**
@@ -162,7 +159,7 @@
             $values     = array();
             $where      = array(
                 array(
-                    "column" => "ID".$this->Table,
+                    "column" => "ID".$this->ClassName,
                     "value" => $objectID,
                     "condition" => "="
                 )
@@ -179,7 +176,7 @@
                 }
             }
 
-            $this->Database->update($this->Table, $columns, $values, $where);
+            $this->Database->update($this->ClassName, $columns, $values, $where);
         }
 
         /**
@@ -196,13 +193,13 @@
             $objectID   = $obj->$getterName();
             $where      = array(
                 array(
-                    "column" => "ID".$this->Table,
+                    "column" => "ID".$this->ClassName,
                     "value" => $objectID,
                     "condition" => "="
                 )
             );
 
-            $this->Database->delete($this->Table, $where);
+            $this->Database->delete($this->ClassName, $where);
             $this->__destruct();
         }
         /**
