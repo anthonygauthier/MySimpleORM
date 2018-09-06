@@ -7,7 +7,7 @@ To be able to use the ORM, you need to have a PHP application and a MySQL databa
 
 ### Database-side guidelines
 
-1. The names of your table are going to be the names of your object classes in PHP. Therefore, a table named "Users" will refer to the class "Users".
+1. The name of your tables are going to be the names of your object classes in PHP. Therefore, a table named "Users" will refer to the class "Users".
 2. Make sure that your primary keys all start with "ID". For instance; "IDUsers".
 
 ### Application-side setup
@@ -23,27 +23,27 @@ To be able to use the ORM, you need to have a PHP application and a MySQL databa
 ```php
 require_once("BaseClass.php");
 
-class your_class extends BaseClass {
-  public $IDyour_class;
+class MyClass extends BaseClass {
+  public $IDMyClass;
   public $Name;
 
   public __construct() {
     parent::__construct($this);
-    $this->IDyour_class = 0;
+    $this->IDMyClass = 0;
     $this->Name = "";
   }
   public __destruct() {}
 
-  public getIDyour_class() {
-    return $this->IDyour_class;  
+  public getIDMyClass() {
+    return $this->IDMyClass;  
   }
 
   public getName() {
     return $this->Name;  
   }
 
-  public setName($id) {
-    $this->IDyour_class = $id;  
+  public setIDMyClass($id) {
+    $this->IDMyClass = $id;  
   }
 
   public setName($n) {
@@ -52,8 +52,14 @@ class your_class extends BaseClass {
 }
 ```
 
+#### Example of a table
+| _MyClass_ |
+|-----------|
+| IDMyClass |
+| Name      |
+
 ## Documentation
-*The examples below are all used as if they were part of a function within a controller.
+*The examples below are all used as if they were part of a function within a controller (MVC).
 
 ### Select
 #### To select an object by its ID
