@@ -65,7 +65,7 @@ class MyClass extends BaseClass {
 #### To select an object by its ID
 ```php
 $Users = new Users();
-$Users = $Users->findObjectById(1);
+$Users = $Users->findById(1);
 ```
 You've retrieved the user "1" from the table "Users" and can now use it as an object.
 
@@ -79,7 +79,7 @@ $wheres = array(
     "condition" => "=",
     "value" => 1 //keep in mind you could use a sub-query here
 );
-$Users = $Users->getObjectArray($wheres);
+$Users = $Users->getArray($wheres);
 ```
 You've just retrieved all the users that were part of the company "1". You're object ```$Users``` is now an array of ```Users```
 
@@ -89,7 +89,7 @@ Assuming the database contains a```Users``` with the name "foo".
 
 $Users = new Users();
 $Users->setName("foo");
-$Users = $Users->getCurrentObject();
+$Users = $Users->getCurrent();
 
 //The mapper returned the object User named "foo"
 ``` 
@@ -100,12 +100,12 @@ Inserting, updating or deleting an object is very simple. All you need to do is 
 //Insert
 $Users = new $Users();
 $Users->setName("foo");
-$Users->insertObject();
+$Users->insert();
 
 //Update
 $Users->setName("bar");
-$Users->updateObject();
+$Users->update();
 
 //Delete
-$Users->deleteObject();
+$Users->delete();
 ```
