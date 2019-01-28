@@ -12,6 +12,7 @@
         protected $Database;
         protected $Object;
         protected $ClassName;
+        protected $ObjectID;
 
         /**
          * ObjectMapping::__construct()
@@ -23,6 +24,8 @@
             $this->ClassName = get_class($o);
             $this->Database = new Database();
             $this->Object = $o;
+            $getterName = "getID" . $this->ClassName();
+            $this->ObjectID = $this->Object->$getterName();
         }
 
         public function __destruct() {}
@@ -129,14 +132,12 @@
         public function updateObject($obj=null) {
             $this->Object = ($obj != null) ? $obj : null;
             
-            $getterName = "getID" . $this->ClassName();
-            $objectID   = $this->Object->$getterName();
             $columns    = array();
             $values     = array();
             $where      = array(
                 array(
                     "column" => "ID".$this->ClassName,
-                    "value" => $objectID,
+                    "value" => $this->ObjectID,
                     "condition" => "="
                 )
             );
@@ -171,12 +172,10 @@
         public function deleteObject($obj=null) {
             $this->Object = ($obj != null) ? $obj : null;
                 
-            $getterName = "getID" . $this->ClassName();
-            $objectID   = $obj->$getterName();
             $where      = array(
                 array(
                     "column" => "ID".$this->ClassName,
-                    "value" => $objectID,
+                    "value" => $this->ObjectID,
                     "condition" => "="
                 )
             );
