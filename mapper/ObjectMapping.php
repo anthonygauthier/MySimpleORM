@@ -113,10 +113,8 @@
             $values           = array();
 
             foreach($objectAttributes as $attributeName=>$attributeValue) {
-                $getterName = "get" . $attributeName;
-
                 array_push($columns, $attributeName);
-                array_push($values , $this->Object->$getterName());
+                array_push($values , $this->Object->$get($attributeName));
             }
 
             $this->Database->insert($this->ClassName, $columns, $values);
@@ -147,10 +145,8 @@
 
             foreach($objectAttributes as $attributeName=>$attributeValue) {
                 if($attributeName != "ID".$this->ClassName) {
-                    $getterName = "get" . $attributeName;
-
                     array_push($columns, $attributeName);
-                    array_push($values , $this->Object->$getterName());
+                    array_push($values , $this->Object->$get($attributeName));
                 }
             }
 
@@ -160,6 +156,9 @@
         public function saveObject($obj=null) {
             $this->Object = ($obj != null) ? $obj : null;
             
+            if($this->Object->) {
+
+            }
 
         }
 
@@ -200,16 +199,14 @@
                 $this->Object = new $this->ClassName();
 
                 foreach($attributes as $key=>$attribute) {
-                    $setterName = "set".$key;
-
                     //If object contains other objects
                     if(strpos($key, "ID") !== false && $key != "ID".$this->ClassName) {
                         $linkedClassName = str_replace("ID", "", $key);
                         $objectToPush = new $linkedClassName();
                         $objectToPush = $objectToPush->findObjectById($row[$key]);
-                        $obj->$setterName($objectToPush);
+                        $obj->$set($key, $objectToPush);
                     } else {
-                        $obj->$setterName($row[$key]);
+                        $obj->$set($key, $row[$key]);
                     }
                 }
 

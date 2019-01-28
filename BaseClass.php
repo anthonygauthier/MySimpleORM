@@ -65,7 +65,7 @@
             $this->$key = $value;
         }
         
-        public function get ($key, $value) {
+        public function get ($key) {
             return $this->$key;
         }
 
