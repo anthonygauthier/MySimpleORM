@@ -13,10 +13,9 @@ To be able to use the ORM, you need to have a PHP application and a MySQL databa
 ### Application-side setup
 
 1. Make sure to "require" the "BaseClass.php" file in your class file and then extend your class with it.
-3. Make sure that your class attributes are all equivalent to your table columns and ensure that they all have the same name.
-4. Create your getters/setters.
-5. Read the (short) documentation to understand how to select/update/delete/insert objects to your DB.
-6. Don't forget to modify the "Database.php" class with your database information.
+2. Make sure that your class attributes are all equivalent to your table columns and ensure that they all have the same name.
+3. Read the (short) documentation to understand how to select/update/delete/insert objects to your DB.
+4. Don't forget to modify the "Database.php" class with your database information.
 
 #### Example of a class
 
@@ -33,22 +32,6 @@ class MyClass extends BaseClass {
     $this->Name = "";
   }
   public __destruct() {}
-
-  public getIDMyClass() {
-    return $this->IDMyClass;  
-  }
-
-  public getName() {
-    return $this->Name;  
-  }
-
-  public setIDMyClass($id) {
-    $this->IDMyClass = $id;  
-  }
-
-  public setName($n) {
-    $this->Name = $n;  
-  }
 }
 ```
 
@@ -88,7 +71,7 @@ Assuming the database contains a```Users``` with the name "foo".
 ```php
 
 $Users = new Users();
-$Users->setName("foo");
+$Users->set("Name", "foo");
 $Users = $Users->getCurrent();
 
 //The mapper returned the object User named "foo"
@@ -99,11 +82,11 @@ Inserting, updating or deleting an object is very simple. All you need to do is 
 ```php
 //Insert
 $Users = new $Users();
-$Users->setName("foo");
+$Users->set("Name", "foo");
 $Users->insert();
 
 //Update
-$Users->setName("bar");
+$Users->set("Name", "bar");
 $Users->update();
 
 //Delete
