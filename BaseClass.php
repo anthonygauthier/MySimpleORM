@@ -38,34 +38,34 @@
             return $attributes;
         }
 
-        public function findObjectById($id) {
+        public function findById($id) {
             $mappedObject = $this->Mapper->findById($id);
 
             return $mappedObject;
         }
 
-        public function getObjectArray($wheres=null) {
+        public function getArray($wheres=null) {
             $objectArray = array();
             $objectArray = $this->Mapper->getObjectArray($wheres);
 
             return $objectArray;
         }
 
-        public function getCurrentObject() {
+        public function getCurrent() {
             $mappedObject = $this->Mapper->getCurrentObject($this);
 
             return $mappedObject;
         }
 
-        public function insertObject() {
+        public function insert() {
             $this->Mapper->insertObject($this);
         }
 
-        public function updateObject() {
+        public function update() {
             $this->Mapper->updateObject($this);
         }
 
-        public function deleteObject() {
+        public function delete() {
             $this->Mapper->deleteObject($this);
         }
 
