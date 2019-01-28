@@ -78,16 +78,6 @@
         }
 
         /**
-         * findByParam
-         * 
-         * @param [type] $array
-         * @return void
-         */
-        public function findByParam($array) {
-            //TODO. Will return array of objects ?
-        }
-
-        /**
          * getCurrentObject
          * 
          * @param [type] $obj
