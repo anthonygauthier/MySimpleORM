@@ -68,6 +68,15 @@
         public function delete() {
             $this->Mapper->deleteObject($this);
         }
+        
+        /** Generic getter/setter **/
+        public function set($key, $value) {
+            $this->key = $value;
+        }
+        
+        public function get ($key, $value) {
+            return $this->key;
+        }
 
     }
 ?>
