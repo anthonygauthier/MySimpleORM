@@ -20,7 +20,7 @@
          */
         protected $Database;
         protected $Object;
-        protected $ClassName
+        protected $ClassName;
 
         /**
          * ObjectMapping::__construct()
