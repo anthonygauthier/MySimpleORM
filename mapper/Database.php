@@ -1,15 +1,4 @@
 <?php
-/*
-* Author      : Anthony Gauthier
-* Owner       : Anthony Gauthier
-* Date created  : 2017-03-19
-* Date modified : 2017-04-04
-* Software    : YOUR PROJECT
-* File        : Database.php
-* Description : Database wrapper
-*/
-    // namespace ObjectMapping;
-
     class Database {
         /**
          * Variables
@@ -21,7 +10,7 @@
          * @var [mysqli] $Instance
          */
         protected $Host;
-	protected $MysqlPort;
+	    protected $MysqlPort;
         protected $Database;
         protected $User;
         protected $Sql;
@@ -37,7 +26,7 @@
             $this->User = "MYSQL_USER";
             $this->Password = "MYSQL_PASSWORD";
             $this->Database = "MYSQL_DATABASE";
-	    $this->MysqlPort = "3306";
+	        $this->MysqlPort = "3306";
         }
 
         public function __destruct() {}

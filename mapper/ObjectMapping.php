@@ -1,13 +1,4 @@
 <?php
-/*
-* Author      : Anthony Gauthier
-* Owner       : Anthony Gauthier
-* Date created  : 2017-03-24
-* Date modified : 2017-04-04
-* Software    : YOUR PROJECT
-* File        : ObjectMapping.php
-* Description : Object Mapping class, serves as a database abstraction layer
-*/
     require_once("ObjectMappingInterface.php");
     require_once("Database.php");
 
@@ -84,8 +75,7 @@
          * @return void
          */
         public function getCurrentObject($obj=null) {
-            if($obj != null)
-                $this->Object = $obj;
+            $this->Object = ($obj != null) ? $obj : null;
                 
             $objectAttributes = $this->Object->getObjectAttributes($obj);
             $wheres = array(); 
@@ -116,8 +106,7 @@
          * @return void
          */
         public function insertObject($obj=null) {
-            if($obj != null)
-                $this->Object = $obj;
+            $this->Object = ($obj != null) ? $obj : null;
 
             $objectAttributes = $this->Object->getObjectAttributes($obj); 
             $columns          = array();
@@ -140,8 +129,7 @@
          * @return void
          */
         public function updateObject($obj=null) {
-            if($obj != null)
-                $this->Object = $obj;
+            $this->Object = ($obj != null) ? $obj : null;
             
             $getterName = "getID" . $this->ClassName();
             $objectID   = $this->Object->$getterName();
@@ -169,6 +157,12 @@
             $this->Database->update($this->ClassName, $columns, $values, $where);
         }
 
+        public function saveObject($obj=null) {
+            $this->Object = ($obj != null) ? $obj : null;
+            
+
+        }
+
         /**
          * deleteObject
          * 
@@ -176,8 +170,7 @@
          * @return void
          */
         public function deleteObject($obj=null) {
-            if($obj != null)
-                $this->Object = $obj;
+            $this->Object = ($obj != null) ? $obj : null;
                 
             $getterName = "getID" . $this->ClassName();
             $objectID   = $obj->$getterName();

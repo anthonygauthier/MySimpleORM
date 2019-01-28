@@ -1,13 +1,4 @@
 <?php
-/*
-* Author      : Anthony Gauthier
-* Owner       : Anthony Gauthier
-* Date created  : 2017-03-24
-* Date modified : 2017-03-24
-* Software    : YOUR PROJECT
-* File        : ObjectMappingInterface.php
-* Description : Object Mapping Interface
-*/
     /**
      * Interface defining all the methods the ObjectMapping class 
      * will be using
