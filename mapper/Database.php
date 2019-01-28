@@ -32,6 +32,21 @@
         public function __destruct() {}
         
         /**
+         * Database::setup()
+         * This function is a kind of parametrized constructor. Sets up the database's host, user, etc.
+         * Very useful when playing with different databases, as well as for unit testing.
+         * 
+         * @return void
+         */
+        public function setup($host, $user, $password, $database, $port) {
+            $this->Host = $host;
+            $this->User = $user;
+            $this->Password = $password;
+            $this->Database = $database;
+	        $this->MysqlPort = $port;
+        }
+        
+        /**
          * Database::connect()
          * Opens up the connection to the database based on the object's attributes¸
          * 
