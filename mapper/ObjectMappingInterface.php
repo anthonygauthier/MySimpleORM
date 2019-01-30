@@ -5,7 +5,6 @@
      */
     interface ObjectMappingInterface { 
         public function findById($id);
-        public function findByParam($array);
         public function getCurrentObject();
         public function getObjectArray($wheres);
         public function insertObject();

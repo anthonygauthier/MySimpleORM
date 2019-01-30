@@ -38,12 +38,12 @@
          * 
          * @return void
          */
-        public function setup($host, $user, $password, $database, $port) {
-            $this->Host = $host;
-            $this->User = $user;
-            $this->Password = $password;
-            $this->Database = $database;
-	        $this->MysqlPort = $port;
+        public function setup() {
+            $this->Host = $_ENV["MYSQL_HOST"];
+            $this->User = $_ENV["MYSQL_USERNAME"];
+            $this->Password = $_ENV["MYSQL_PASSWORD"];
+            $this->Database = $_ENV["MYSQL_DATABASE"];
+            $this->MysqlPort = $_ENV["MYSQL_PORT"];
         }
         
         /**
@@ -53,7 +53,6 @@
          * @return void
          */
         public function connect() {
-            
             $con = mysqli_connect($this->Host, $this->User, $this->Password, $this->Database, $this->MysqlPort);
 
             if(mysqli_connect_errno()) {
