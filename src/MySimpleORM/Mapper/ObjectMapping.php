@@ -186,8 +186,6 @@ class ObjectMapping implements ObjectMappingInterface
      */
     public function deleteObject($obj = null)
     {
-        $this->Object = ($obj != null) ? $obj : null;
-
         $where = array(
             array(
                 "column" => $this->PrimaryKey,
@@ -197,7 +195,6 @@ class ObjectMapping implements ObjectMappingInterface
         );
 
         $this->Database->delete($this->ClassName, $where);
-        $this->Object = null;
     }
     /**
      * Undocumented function
