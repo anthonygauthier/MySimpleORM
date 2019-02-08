@@ -1,0 +1,16 @@
+{
+    "name": "Delirius325/MySimpleORM",
+    "version": "2.0.0",
+    "description": "Simple, lightweight and effective ORM using MySQLi",
+    "authors": [
+        {
+            "name": "Anthony Gauthier",
+            "email": "anthony.gauthier325@gmail.com",
+            "homepage": "https://www.github.com/delirius325",
+            "role": "Developer"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "^7"
+    }
+}

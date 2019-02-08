@@ -1,20 +1,13 @@
 <?php
-    /*
-    * Author      : Anthony Gautthier
-    * Owner       : Anthony Gauthtier
-    * Date created  : 2017-04-04
-    * Date modified : 2017-05-02
-    * Software    : YOUR_PROJECT
-    * File        : BaseClass.php
-    * Description : Class that detains all the basic find/delete/insert/update for any given object
-    */
-    require_once("models/mapper/ObjectMapping.php");
+    namespace Delirius325\MySimpleORM;
+
+    require_once("./mapper/ObjectMapping.php");
 
     class BaseClass {
         protected $Mapper;
 
-        public function __construct($className, $object) {
-            $this->Mapper = new ObjectMapping($className, $object);
+        public function __construct() {
+            $this->Mapper = new ObjectMapping($this);
         }
 
         public function __destruct()  {}
@@ -30,10 +23,13 @@
             return $var;
         }
 
-        public function getObjectAttributes() {
-            //Retrieve attributes and remove the Mapper from the list
+        public function getObjectAttributes() {     
+            // clean up attributes
             $attributes = get_object_vars($this);
             unset($attributes["Mapper"]);
+            unset($attributes["Object"]);
+            unset($attributes["ClassName"]);
+            unset($attributes["ObjectID"]);
 
             return $attributes;
         }
@@ -56,13 +52,19 @@
 
             return $mappedObject;
         }
-
+        // DEPRECATED
         public function insert() {
+            printf("DEPRECATED: The \"insert()\" method is deprecated since version 2.0. Please use \"save()\" instead.");
             $this->Mapper->insertObject($this);
         }
-
+        // DEPRECATED
         public function update() {
+            printf("DEPRECATED: The \"insert()\" method is deprecated since version 2.0. Please use \"save()\" instead.");
             $this->Mapper->updateObject($this);
+        }
+
+        public function save() {
+            $this->Mapper->saveObject($this);
         }
 
         public function delete() {
@@ -74,7 +76,7 @@
             $this->$key = $value;
         }
         
-        public function get ($key, $value) {
+        public function get ($key) {
             return $this->$key;
         }
 

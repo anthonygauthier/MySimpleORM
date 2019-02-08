@@ -1,13 +1,6 @@
 <?php
-/*
-* Author      : Anthony Gauthier
-* Owner       : Anthony Gauthier
-* Date created  : 2017-03-24
-* Date modified : 2017-04-04
-* Software    : YOUR PROJECT
-* File        : ObjectMapping.php
-* Description : Object Mapping class, serves as a database abstraction layer
-*/
+    namespace Delirius325\MySimpleORM;
+
     require_once("ObjectMappingInterface.php");
     require_once("Database.php");
 
@@ -21,6 +14,8 @@
         protected $Database;
         protected $Object;
         protected $ClassName;
+        protected $PrimaryKey;
+        protected $ForeignKeys;
 
         /**
          * ObjectMapping::__construct()
@@ -31,7 +26,14 @@
         public function __construct($o) {
             $this->ClassName = get_class($o);
             $this->Database = new Database();
+            if($_ENV["MYSQL_HOST"] != "") {
+                $this->Database->setup();
+            }
             $this->Object = $o;
+            if($this->Database->connect()) {
+                $this->PrimaryKey = $this->Database->getKeys($this->ClassName, "primary");
+                $this->ForeignKeys = $this->Database->getKeys($this->ClassName, "foreign");
+            }
         }
 
         public function __destruct() {}
@@ -45,7 +47,7 @@
         public function findById($id) {
             $where = array(
                 array(
-                    "column" => "ID".$this->ClassName,
+                    "column" => $this->PrimaryKey,
                     "value" => $id,
                     "condition" => "="
                 )
@@ -78,30 +80,17 @@
         }
 
         /**
-         * findByParam
-         * 
-         * @param [type] $array
-         * @return void
-         */
-        public function findByParam($array) {
-            //TODO. Will return array of objects ?
-        }
-
-        /**
          * getCurrentObject
          * 
          * @param [type] $obj
          * @return void
          */
         public function getCurrentObject($obj=null) {
-            if($obj != null)
-                $this->Object = $obj;
-                
             $objectAttributes = $this->Object->getObjectAttributes($obj);
             $wheres = array(); 
 
             foreach($objectAttributes as $attributeName=>$attributeValue) {
-                if(($attributeName != "ID".$this->ClassName) && ($attributeValue != null || $attributeValue != 0 || $attributeValue != "")) {
+                if(($attributeName != $this->PrimaryKey) && ($attributeValue != null || $attributeValue != 0 || $attributeValue != "")) {
                     array_push($wheres, array(
                         "column" => $attributeName,
                         "value" => $attributeValue,
@@ -126,18 +115,15 @@
          * @return void
          */
         public function insertObject($obj=null) {
-            if($obj != null)
-                $this->Object = $obj;
-
             $objectAttributes = $this->Object->getObjectAttributes($obj); 
             $columns          = array();
             $values           = array();
 
             foreach($objectAttributes as $attributeName=>$attributeValue) {
-                $getterName = "get" . $attributeName;
-
-                array_push($columns, $attributeName);
-                array_push($values , $this->Object->$getterName());
+                if($attributeName !== $this->PrimaryKey) {
+                    array_push($columns, $attributeName);
+                    array_push($values , $this->Object->get($attributeName));
+                }
             }
 
             $this->Database->insert($this->ClassName, $columns, $values);
@@ -150,17 +136,12 @@
          * @return void
          */
         public function updateObject($obj=null) {
-            if($obj != null)
-                $this->Object = $obj;
-            
-            $getterName = "getID" . $this->ClassName();
-            $objectID   = $this->Object->$getterName();
             $columns    = array();
             $values     = array();
             $where      = array(
                 array(
-                    "column" => "ID".$this->ClassName,
-                    "value" => $objectID,
+                    "column" => $this->PrimaryKey,
+                    "value" => $this->Object->get($this->PrimaryKey),
                     "condition" => "="
                 )
             );
@@ -168,15 +149,26 @@
             $objectAttributes = $this->Object->getObjectAttributes($obj); 
 
             foreach($objectAttributes as $attributeName=>$attributeValue) {
-                if($attributeName != "ID".$this->ClassName) {
-                    $getterName = "get" . $attributeName;
-
+                if($attributeName != $this->PrimaryKey) {
                     array_push($columns, $attributeName);
-                    array_push($values , $this->Object->$getterName());
+                    array_push($values , $this->Object->get($attributeName));
                 }
             }
 
             $this->Database->update($this->ClassName, $columns, $values, $where);
+        }
+
+        /**
+         * saveObject
+         * 
+         * @return void
+         */
+        public function saveObject() {
+            if(($this->Object->get($this->PrimaryKey) !== 0)) {
+                $this->updateObject($this->Object);
+            } else {
+                $this->insertObject($this->Object);
+            }
         }
 
         /**
@@ -186,15 +178,12 @@
          * @return void
          */
         public function deleteObject($obj=null) {
-            if($obj != null)
-                $this->Object = $obj;
+            $this->Object = ($obj != null) ? $obj : null;
                 
-            $getterName = "getID" . $this->ClassName();
-            $objectID   = $obj->$getterName();
             $where      = array(
                 array(
-                    "column" => "ID".$this->ClassName,
-                    "value" => $objectID,
+                    "column" => $this->PrimaryKey,
+                    "value" => $this->Object->get($this->PrimaryKey),
                     "condition" => "="
                 )
             );
@@ -213,20 +202,18 @@
         public function mapObject(&$obj, $rows, &$objArr=null) {
             $attributes = $obj->getObjectAttributes($obj);
             
+            // $this->Object = new $this->ClassName();
+
             foreach($rows as $row) {
-                $this->Object = new $this->ClassName();
-
                 foreach($attributes as $key=>$attribute) {
-                    $setterName = "set".$key;
-
                     //If object contains other objects
-                    if(strpos($key, "ID") !== false && $key != "ID".$this->ClassName) {
+                    if(in_array($key, $this->ForeignKeys) && $key != $this->PrimaryKey) {
                         $linkedClassName = str_replace("ID", "", $key);
                         $objectToPush = new $linkedClassName();
                         $objectToPush = $objectToPush->findObjectById($row[$key]);
-                        $obj->$setterName($objectToPush);
+                        $obj->set($key, $objectToPush);
                     } else {
-                        $obj->$setterName($row[$key]);
+                        $obj->set($key, $row[$key]);
                     }
                 }
 

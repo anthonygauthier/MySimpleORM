@@ -1,15 +1,6 @@
 <?php
-/*
-* Author      : Anthony Gauthier
-* Owner       : Anthony Gauthier
-* Date created  : 2017-03-19
-* Date modified : 2017-04-04
-* Software    : YOUR PROJECT
-* File        : Database.php
-* Description : Database wrapper
-*/
-    // namespace ObjectMapping;
-
+    namespace Delirius325\MySimpleORM;
+    
     class Database {
         /**
          * Variables
@@ -21,7 +12,7 @@
          * @var [mysqli] $Instance
          */
         protected $Host;
-	protected $MysqlPort;
+	    protected $MysqlPort;
         protected $Database;
         protected $User;
         protected $Sql;
@@ -37,10 +28,25 @@
             $this->User = "MYSQL_USER";
             $this->Password = "MYSQL_PASSWORD";
             $this->Database = "MYSQL_DATABASE";
-	    $this->MysqlPort = "3306";
+	        $this->MysqlPort = "3306";
         }
 
         public function __destruct() {}
+        
+        /**
+         * Database::setup()
+         * This function is a kind of parametrized constructor. Sets up the database's host, user, etc.
+         * Very useful when playing with different databases, as well as for unit testing.
+         * 
+         * @return void
+         */
+        public function setup($host=false, $username=false, $password=false, $database=false, $port=false) {
+            $this->Host = $host ?: $_ENV["MYSQL_HOST"];
+            $this->User = $username ?: $_ENV["MYSQL_USERNAME"];
+            $this->Password = $password ?: $_ENV["MYSQL_PASSWORD"];
+            $this->Database = $database ?: $_ENV["MYSQL_DATABASE"];
+            $this->MysqlPort = $port ?: $_ENV["MYSQL_PORT"];
+        }
         
         /**
          * Database::connect()
@@ -49,7 +55,6 @@
          * @return void
          */
         public function connect() {
-            
             $con = mysqli_connect($this->Host, $this->User, $this->Password, $this->Database, $this->MysqlPort);
 
             if(mysqli_connect_errno()) {
@@ -352,7 +357,38 @@
             }
         }
 
-        //TODO. Check error with ObjectMapping class
+        public function getKeys($table, $type="primary") {
+            if($type == "primary") {
+                $this->Sql = "SHOW COLUMNS FROM ". $table .";";
+                $results = $this->Instance->query($this->Sql);
+                foreach($results as $row) {
+                    if($row["Key"] == "PRI") {
+                        return $row["Field"];
+                    }
+                }
+            } else if ($type == "foreign") {
+                $fk_array = array();
+                $return = array();
+                $this->Sql = "SHOW CREATE TABLE " . $table;
+                $results = $this->Instance->query($this->Sql);
+
+                while($row = $results->fetch_assoc()) {
+                    $fk_array[] = $row;
+                }
+
+                $fk_array = explode("FOREIGN KEY", $fk_array[0]["Create Table"]);
+
+                foreach($fk_array as $fk) {
+                    if(strpos($fk, "REFERENCES")) {
+                        $column_name = substr($fk, 3, strpos($fk, ")") - 4);
+                        $return[] = array($column_name);
+                    }
+                }
+
+                return $return;
+            }
+        }
+
         public function getJoinsArray($table) {
             $fk_array = array();
             $return = array();
