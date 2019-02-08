@@ -1,4 +1,6 @@
 <?php
+    namespace Delirius325\MySimpleORM;
+
     require_once("./mapper/ObjectMapping.php");
 
     class BaseClass {
