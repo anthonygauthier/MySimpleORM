@@ -1,4 +1,6 @@
 {
+    "name": "Delirius325/MySimpleORM",
+    "description": "Simple, lightweight and effective ORM using MySQLi",
     "require-dev": {
         "phpunit/phpunit": "^7"
     }
