@@ -1,6 +1,16 @@
 language: php
 php:
   - 7.1
+env:
+  - MYSQL_HOST=127.0.0.1
+  - MYSQL_USERNAME=root
+  - MYSQL_PASSWORD=""
+  - MYSQL_DATABASE=travis
+  - MYSQL_PORT=3306
+services:
+  - mysql
+before_install:
+  - mysql -u root --password="" < tests/sql/travis.sql
 before_script:
   - curl -s http://getcomposer.org/installer | php
   - php composer.phar install  
