@@ -13,6 +13,7 @@
     }
 
     public function testSave(): void {
+      var_dump($this);
       // insert assertion
       $this->User->set("username", "user");
       $this->User->set("description", "desc");
