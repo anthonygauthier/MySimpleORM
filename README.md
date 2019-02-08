@@ -8,7 +8,6 @@ To be able to use the ORM, you need to have a PHP application and a MySQL databa
 ### Database-side guidelines
 
 1. The name of your tables are going to be the names of your object classes in PHP. Therefore, a table named "Users" will refer to the class "Users".
-2. Make sure that your primary keys all start with "ID". For instance; "IDUsers".
 
 ### Application-side setup
 
@@ -20,18 +19,20 @@ To be able to use the ORM, you need to have a PHP application and a MySQL databa
 #### Example of a class
 
 ```php
-require_once("BaseClass.php");
+require 'vendor/autoload.php';
+
+use Delirius325\MySimpleORM\BaseClass;
 
 class MyClass extends BaseClass {
   public $IDMyClass;
   public $Name;
 
-  public __construct() {
+  public function __construct() {
     parent::__construct($this);
     $this->IDMyClass = 0;
     $this->Name = "";
   }
-  public __destruct() {}
+  public function __destruct() {}
 }
 ```
 
@@ -80,14 +81,13 @@ $Users = $Users->getCurrent();
 ### Insert / Update / Delete
 Inserting, updating or deleting an object is very simple. All you need to do is call a few functions!
 ```php
-//Insert
+//Insert & Update
 $Users = new $Users();
 $Users->set("Name", "foo");
-$Users->insert();
+$Users->save(); // inserted
 
-//Update
 $Users->set("Name", "bar");
-$Users->update();
+$Users->save(); // updated
 
 //Delete
 $Users->delete();
