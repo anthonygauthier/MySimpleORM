@@ -12,7 +12,7 @@
       $this->User = new Users();
     }
 
-    public function testSave(): void {
+    public function testORM(): void {
       // insert assertion
       $this->User->set("username", "user");
       $this->User->set("description", "desc");
@@ -20,13 +20,20 @@
       $this->User->getCurrent();
       $createdId = (int) $this->User->get("IDUsers");
       
-      // update assertion
       $this->User->set("username", "user2");
       $this->User->save();
       $this->User = $this->User->findById($createdId);
 
+      // select assertion
+      $this->assertNotNull($this->User);
+
+       // update assertion
       $this->assertGreaterThan(0, $createdId);
       $this->assertEquals("user2", $this->User->get("username"));
+
+      // delete assertion
+      $this->User->delete();
+      $this->assertNull($this->User);
     }
   }
 ?>
