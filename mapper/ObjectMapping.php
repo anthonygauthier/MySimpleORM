@@ -1,4 +1,6 @@
 <?php
+    namespace Delirius325\MySimpleORM;
+
     require_once("ObjectMappingInterface.php");
     require_once("Database.php");
 
@@ -12,7 +14,8 @@
         protected $Database;
         protected $Object;
         protected $ClassName;
-        protected $ObjectID;
+        protected $PrimaryKey;
+        protected $ForeignKeys;
 
         /**
          * ObjectMapping::__construct()
@@ -27,7 +30,10 @@
                 $this->Database->setup();
             }
             $this->Object = $o;
-            $this->ObjectID = $this->Object->get("ID".$this->ClassName);
+            if($this->Database->connect()) {
+                $this->PrimaryKey = $this->Database->getKeys($this->ClassName, "primary");
+                $this->ForeignKeys = $this->Database->getKeys($this->ClassName, "foreign");
+            }
         }
 
         public function __destruct() {}
@@ -39,10 +45,9 @@
          * @return $this->Object
          */
         public function findById($id) {
-            var_dump($id);
             $where = array(
                 array(
-                    "column" => "ID".$this->ClassName,
+                    "column" => $this->PrimaryKey,
                     "value" => $id,
                     "condition" => "="
                 )
@@ -85,7 +90,7 @@
             $wheres = array(); 
 
             foreach($objectAttributes as $attributeName=>$attributeValue) {
-                if(($attributeName != "ID".$this->ClassName) && ($attributeValue != null || $attributeValue != 0 || $attributeValue != "")) {
+                if(($attributeName != $this->PrimaryKey) && ($attributeValue != null || $attributeValue != 0 || $attributeValue != "")) {
                     array_push($wheres, array(
                         "column" => $attributeName,
                         "value" => $attributeValue,
@@ -115,7 +120,7 @@
             $values           = array();
 
             foreach($objectAttributes as $attributeName=>$attributeValue) {
-                if($attributeName !== "ID".$this->ClassName) {
+                if($attributeName !== $this->PrimaryKey) {
                     array_push($columns, $attributeName);
                     array_push($values , $this->Object->get($attributeName));
                 }
@@ -135,8 +140,8 @@
             $values     = array();
             $where      = array(
                 array(
-                    "column" => "ID".$this->ClassName,
-                    "value" => $this->Object->get("ID".$this->ClassName),
+                    "column" => $this->PrimaryKey,
+                    "value" => $this->Object->get($this->PrimaryKey),
                     "condition" => "="
                 )
             );
@@ -144,7 +149,7 @@
             $objectAttributes = $this->Object->getObjectAttributes($obj); 
 
             foreach($objectAttributes as $attributeName=>$attributeValue) {
-                if($attributeName != "ID".$this->ClassName) {
+                if($attributeName != $this->PrimaryKey) {
                     array_push($columns, $attributeName);
                     array_push($values , $this->Object->get($attributeName));
                 }
@@ -159,7 +164,7 @@
          * @return void
          */
         public function saveObject() {
-            if(($this->Object->get("ID".$this->ClassName) !== 0)) {
+            if(($this->Object->get($this->PrimaryKey) !== 0)) {
                 $this->updateObject($this->Object);
             } else {
                 $this->insertObject($this->Object);
@@ -177,8 +182,8 @@
                 
             $where      = array(
                 array(
-                    "column" => "ID".$this->ClassName,
-                    "value" => $this->ObjectID,
+                    "column" => $this->PrimaryKey,
+                    "value" => $this->Object->get($this->PrimaryKey),
                     "condition" => "="
                 )
             );
@@ -202,7 +207,7 @@
             foreach($rows as $row) {
                 foreach($attributes as $key=>$attribute) {
                     //If object contains other objects
-                    if(strpos($key, "ID") !== false && $key != "ID".$this->ClassName) {
+                    if(in_array($key, $this->ForeignKeys) && $key != $this->PrimaryKey) {
                         $linkedClassName = str_replace("ID", "", $key);
                         $objectToPush = new $linkedClassName();
                         $objectToPush = $objectToPush->findObjectById($row[$key]);

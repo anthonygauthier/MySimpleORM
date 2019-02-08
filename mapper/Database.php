@@ -1,4 +1,6 @@
 <?php
+    namespace Delirius325\MySimpleORM;
+    
     class Database {
         /**
          * Variables
@@ -355,7 +357,38 @@
             }
         }
 
-        //TODO. Check error with ObjectMapping class
+        public function getKeys($table, $type="primary") {
+            if($type == "primary") {
+                $this->Sql = "SHOW COLUMNS FROM ". $table .";";
+                $results = $this->Instance->query($this->Sql);
+                foreach($results as $row) {
+                    if($row["Key"] == "PRI") {
+                        return $row["Field"];
+                    }
+                }
+            } else if ($type == "foreign") {
+                $fk_array = array();
+                $return = array();
+                $this->Sql = "SHOW CREATE TABLE " . $table;
+                $results = $this->Instance->query($this->Sql);
+
+                while($row = $results->fetch_assoc()) {
+                    $fk_array[] = $row;
+                }
+
+                $fk_array = explode("FOREIGN KEY", $fk_array[0]["Create Table"]);
+
+                foreach($fk_array as $fk) {
+                    if(strpos($fk, "REFERENCES")) {
+                        $column_name = substr($fk, 3, strpos($fk, ")") - 4);
+                        $return[] = array($column_name);
+                    }
+                }
+
+                return $return;
+            }
+        }
+
         public function getJoinsArray($table) {
             $fk_array = array();
             $return = array();
