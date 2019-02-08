@@ -38,12 +38,12 @@
          * 
          * @return void
          */
-        public function setup() {
-            $this->Host = $_ENV["MYSQL_HOST"];
-            $this->User = $_ENV["MYSQL_USERNAME"];
-            $this->Password = $_ENV["MYSQL_PASSWORD"];
-            $this->Database = $_ENV["MYSQL_DATABASE"];
-            $this->MysqlPort = $_ENV["MYSQL_PORT"];
+        public function setup($host=false, $username=false, $password=false, $database=false, $port=false) {
+            $this->Host = $host ?: $_ENV["MYSQL_HOST"];
+            $this->User = $username ?: $_ENV["MYSQL_USERNAME"];
+            $this->Password = $password ?: $_ENV["MYSQL_PASSWORD"];
+            $this->Database = $database ?: $_ENV["MYSQL_DATABASE"];
+            $this->MysqlPort = $port ?: $_ENV["MYSQL_PORT"];
         }
         
         /**

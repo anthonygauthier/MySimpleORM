@@ -23,7 +23,7 @@
         public function __construct($o) {
             $this->ClassName = get_class($o);
             $this->Database = new Database();
-            if($_ENV["MYSQL_HOST"] !== "") {
+            if($_ENV["MYSQL_HOST"] != "") {
                 $this->Database->setup();
             }
             $this->Object = $o;
@@ -81,8 +81,6 @@
          * @return void
          */
         public function getCurrentObject($obj=null) {
-            $this->Object = ($obj != null) ? $obj : null;
-                
             $objectAttributes = $this->Object->getObjectAttributes($obj);
             $wheres = array(); 
 
@@ -112,8 +110,6 @@
          * @return void
          */
         public function insertObject($obj=null) {
-            $this->Object = ($obj != null) ? $obj : null;
-
             $objectAttributes = $this->Object->getObjectAttributes($obj); 
             $columns          = array();
             $values           = array();
@@ -135,14 +131,12 @@
          * @return void
          */
         public function updateObject($obj=null) {
-            $this->Object = ($obj != null) ? $obj : null;
-            
             $columns    = array();
             $values     = array();
             $where      = array(
                 array(
                     "column" => "ID".$this->ClassName,
-                    "value" => $this->ObjectID,
+                    "value" => $this->Object->get("ID".$this->ClassName),
                     "condition" => "="
                 )
             );
@@ -152,7 +146,7 @@
             foreach($objectAttributes as $attributeName=>$attributeValue) {
                 if($attributeName != "ID".$this->ClassName) {
                     array_push($columns, $attributeName);
-                    array_push($values , $this->Object->$get($attributeName));
+                    array_push($values , $this->Object->get($attributeName));
                 }
             }
 
@@ -165,7 +159,7 @@
          * @return void
          */
         public function saveObject() {
-            if(($this->Object->get("ID".$this->ClassName) !== 0) && $this->findById($this->ObjectID) != null) {
+            if(($this->Object->get("ID".$this->ClassName) !== 0)) {
                 $this->updateObject($this->Object);
             } else {
                 $this->insertObject($this->Object);

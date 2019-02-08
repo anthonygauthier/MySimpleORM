@@ -21,13 +21,10 @@
       $this->User->save();
       $this->User->getCurrent();
       $createdId = (int) $this->User->get("IDUsers");
-      printf($createdId . "\n");
       
       // update assertion
       $this->User->set("username", "user2");
-      printf($createdId . "\n");
       $this->User->save();
-      printf($createdId . "\n");
       $this->User = $this->User->findById($createdId);
 
       $this->assertGreaterThan(0, $createdId);

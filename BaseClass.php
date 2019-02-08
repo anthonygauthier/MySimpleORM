@@ -3,6 +3,7 @@
 
     class BaseClass {
         protected $Mapper;
+        // protected $ID.$this->className;
 
         public function __construct() {
             $this->Mapper = new ObjectMapping($this);
