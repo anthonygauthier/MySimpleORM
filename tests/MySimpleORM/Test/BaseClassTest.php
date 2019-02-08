@@ -10,9 +10,6 @@
 
     protected function setUp() {
       $this->User = new Users();
-      if(getenv("TRAVIS") == true) {
-        $this->Users->Mapper->Database->setup("127.0.0.1", "root", "", "travis", "3306");
-      }
     }
 
     public function testSave(): void {

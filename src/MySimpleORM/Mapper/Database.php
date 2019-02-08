@@ -45,11 +45,19 @@ class Database
      */
     public function setup($host = false, $username = false, $password = false, $database = false, $port = false)
     {
-        $this->Host = $host ?: getenv("MYSQL_HOST");
-        $this->User = $username ?: getenv("MYSQL_USERNAME");
-        $this->Password = $password ?: getenv("MYSQL_PASSWORD");
-        $this->Database = $database ?: getenv("MYSQL_DATABASE");
-        $this->MysqlPort = $port ?: getenv("MYSQL_PORT");
+        if(getenv("TRAVIS") == true) {
+            $this->Host = "127.0.0.1";
+            $this->User = "root";
+            $this->Password = "";
+            $this->Database = "travis";
+            $this->MysqlPort = "3306";
+        } else {
+            $this->Host = $host ?: getenv("MYSQL_HOST");
+            $this->User = $username ?: getenv("MYSQL_USERNAME");
+            $this->Password = $password ?: getenv("MYSQL_PASSWORD");
+            $this->Database = $database ?: getenv("MYSQL_DATABASE");
+            $this->MysqlPort = $port ?: getenv("MYSQL_PORT");
+        }
     }
 
     /**
