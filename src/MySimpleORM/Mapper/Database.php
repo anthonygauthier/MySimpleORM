@@ -31,6 +31,11 @@ class Database
         $this->Password = "MYSQL_PASSWORD";
         $this->Database = "MYSQL_DATABASE";
         $this->MysqlPort = "3306";
+
+        // if env variables set
+        if (getenv("MYSQL_HOST") != "") {
+            $this->setup();
+        }
     }
 
     public function __destruct()

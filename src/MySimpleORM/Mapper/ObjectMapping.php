@@ -29,9 +29,6 @@ class ObjectMapping implements ObjectMappingInterface
         $classPathArray = explode("\\", get_class($o));
         $this->ClassName = $classPathArray[sizeof($classPathArray) - 1];
         $this->Database = new Database();
-        if ($_ENV["MYSQL_HOST"] != "") {
-            $this->Database->setup();
-        }
         $this->Object = $o;
         if ($this->Database->connect()) {
             $this->PrimaryKey = $this->Database->getKeys($this->ClassName, "primary");
