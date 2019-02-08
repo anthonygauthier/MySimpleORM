@@ -197,8 +197,7 @@ class ObjectMapping implements ObjectMappingInterface
         );
 
         $this->Database->delete($this->ClassName, $where);
-        $this->Object->__destruct();
-        $this->__destruct();
+        $this->Object = null;
     }
     /**
      * Undocumented function
