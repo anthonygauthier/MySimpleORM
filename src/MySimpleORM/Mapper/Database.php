@@ -26,16 +26,7 @@ class Database
      */
     public function __construct()
     {
-        $this->Host = "SERVER_HOST";
-        $this->User = "MYSQL_USER";
-        $this->Password = "MYSQL_PASSWORD";
-        $this->Database = "MYSQL_DATABASE";
-        $this->MysqlPort = "3306";
-
-        // if env variables set
-        if (getenv("MYSQL_HOST") != "") {
-            $this->setup();
-        }
+        $this->setup();
     }
 
     public function __destruct()
