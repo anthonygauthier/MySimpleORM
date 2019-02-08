@@ -5,6 +5,12 @@ MySimpleORM is a simple PHP/MySQL Object-relational mapping library. It started 
 
 To be able to use the ORM, you need to have a PHP application and a MySQL database. Follow these simple guidelines to setup MsORM on your PHP web application.
 
+## Installation
+
+The recommended method of installation is via [composer](https://getcomposer.org/)
+
+`composer require delirius325/mysimpleorm`
+
 ### Database-side guidelines
 
 1. The name of your tables are going to be the names of your object classes in PHP. Therefore, a table named "Users" will refer to the class "Users".
