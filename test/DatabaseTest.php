@@ -1,7 +1,7 @@
 <?php
   declare(strict_types=1);
   
-  require_once('./mapper/Database.php');
+  require_once('./src/mapper/Database.php');
   use PHPUnit\Framework\TestCase;
 
   final class DatabaseTest extends TestCase {

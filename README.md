@@ -15,19 +15,17 @@ The recommended method of installation is via [composer](https://getcomposer.org
 
 1. The name of your tables are going to be the names of your object classes in PHP. Therefore, a table named "Users" will refer to the class "Users".
 
-### Application-side setup
 
-1. Make sure to "require" the "BaseClass.php" file in your class file and then extend your class with it.
-2. Make sure that your class attributes are all equivalent to your table columns and ensure that they all have the same name.
-3. Read the (short) documentation to understand how to select/update/delete/insert objects to your DB.
-4. Don't forget to modify the "Database.php" class with your database information.
+### Setup
+
+* 
 
 #### Example of a class
 
 ```php
 require 'vendor/autoload.php';
 
-use Delirius325\MySimpleORM\BaseClass;
+use MySimpleORM\BaseClass;
 
 class MyClass extends BaseClass {
   public $IDMyClass;

@@ -1,5 +1,5 @@
 <?php
-    namespace Delirius325\MySimpleORM;
+    namespace MySimpleORM\Mapper;
     
     class Database {
         /**

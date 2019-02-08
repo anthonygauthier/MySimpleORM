@@ -1,5 +1,5 @@
 <?php
-    namespace Delirius325\MySimpleORM;
+    namespace MySimpleORM\Mapper;
 
     require_once("ObjectMappingInterface.php");
     require_once("Database.php");

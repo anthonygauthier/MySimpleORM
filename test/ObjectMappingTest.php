@@ -1,8 +1,8 @@
 <?php
   declare(strict_types=1);
   
-  require_once('./mapper/ObjectMapping.php');
-  require_once('./test/utilities/Users.php');
+  require_once('./src/mapper/ObjectMapping.php');
+  require_once('./src/test/utilities/Users.php');
 
   use PHPUnit\Framework\TestCase;
 

@@ -1,5 +1,5 @@
 {
-    "name": "delirius325/mysimpleorm",
+    "name": "mysimpleorm/mysimpleorm",
     "license": "MIT",
     "description": "Simple, lightweight and effective ORM using MySQLi",
     "authors": [

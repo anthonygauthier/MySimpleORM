@@ -1,7 +1,7 @@
 <?php
-  require_once("./BaseClass.php");
+  require './src/Autoload.php';
 
-  use Delirius325\MySimpleORM\BaseClass;
+  use MySimpleORM\BaseClass;
 
   class Users extends BaseClass {
     public $IDUsers;

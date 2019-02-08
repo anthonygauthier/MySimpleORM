@@ -1,5 +1,5 @@
 <?php
-    namespace Delirius325\MySimpleORM;
+    namespace MySimpleORM\Mapper;
     /**
      * Interface defining all the methods the ObjectMapping class 
      * will be using
