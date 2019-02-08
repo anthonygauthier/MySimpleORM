@@ -1,12 +1,6 @@
 language: php
 php:
   - 7.1
-env:
-  - MYSQL_HOST=127.0.0.1
-  - MYSQL_USERNAME=root
-  - MYSQL_PASSWORD=""
-  - MYSQL_DATABASE=travis
-  - MYSQL_PORT=3306
 services:
   - mysql
 before_install:

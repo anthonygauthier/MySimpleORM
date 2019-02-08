@@ -1,6 +1,5 @@
 CREATE TABLE Users (
-  IDUsers int AUTO_INCREMENT,
-  username varchar(255),
-  description varchar(255),
-  PRIMARY KEY(IDUsers)
-);
+  IDUsers int(11) NOT NULL AUTO_INCREMENT,
+  username varchar(45) DEFAULT NULL,
+  description varchar(45) DEFAULT NULL,
+  PRIMARY KEY (IDUsers));
