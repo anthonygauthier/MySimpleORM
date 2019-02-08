@@ -1,6 +1,7 @@
 {
     "name": "delirius325/mysimpleorm",
     "version": "2.0.0",
+    "license": "MIT",
     "description": "Simple, lightweight and effective ORM using MySQLi",
     "authors": [
         {
