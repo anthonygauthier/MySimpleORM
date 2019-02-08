@@ -1,7 +1,7 @@
 <?php
-  declare(strict_types=1);
-  
-  require_once('./src/mapper/Database.php');
+  namespace MySimpleORM\Test;
+
+  use MySimpleORM\Mapper\Database;
   use PHPUnit\Framework\TestCase;
 
   final class DatabaseTest extends TestCase {

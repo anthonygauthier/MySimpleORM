@@ -1,8 +1,6 @@
 <?php
-  declare(strict_types=1);
-
-  require_once('./test/utilities/Users.php');
-
+  namespace MySimpleORM\Test;
+  
   use PHPUnit\Framework\TestCase;
 
   $createdId = 0;
