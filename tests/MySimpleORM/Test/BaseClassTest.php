@@ -33,7 +33,7 @@
 
       // delete assertion
       $this->User->delete();
-      $this->assertNull($this->User);
+      $this->assertEquals(0, $this->User->get("IDUsers"));
     }
   }
 ?>

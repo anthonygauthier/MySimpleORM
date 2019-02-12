@@ -81,8 +81,7 @@ class BaseClass
 
     public function delete()
     {
-        $this->Mapper->deleteObject($this);
-        var_dump($this);
+        $this->Mapper->deleteObject();
     }
 
     /** Generic getter/setter **/
