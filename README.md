@@ -15,7 +15,13 @@ The recommended method of installation is via [composer](https://getcomposer.org
 
 ### Setup
 
-* 
+Add the following to your PHP class:
+
+1. `require 'vendor/autoload.php;`
+2. `use MySimpleORM\BaseClass;`
+3. `extends BaseClass`
+
+No need for getters/setters, the `BaseClass` provides you a generic methods.
 
 #### Example of a class
 
@@ -25,8 +31,8 @@ require 'vendor/autoload.php';
 use MySimpleORM\BaseClass;
 
 class MyClass extends BaseClass {
-  public $IDMyClass;
-  public $Name;
+  private $IDMyClass;
+  private $Name;
 
   public function MyClass() {
     parent::__construct($this);
