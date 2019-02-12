@@ -34,7 +34,8 @@ class BaseClass
         unset($attributes["Mapper"]);
         unset($attributes["Object"]);
         unset($attributes["ClassName"]);
-        unset($attributes["ObjectID"]);
+        unset($attributes["PrimaryKey"]);
+        unset($attributes["ForeignKeys"]);
 
         return $attributes;
     }
@@ -80,7 +81,7 @@ class BaseClass
 
     public function delete()
     {
-        $this->Mapper->deleteObject($this);
+        $this->Mapper->deleteObject();
     }
 
     /** Generic getter/setter **/

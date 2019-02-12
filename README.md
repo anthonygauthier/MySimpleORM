@@ -1,24 +1,28 @@
 # MySimpleORM
-MySimpleORM is a simple PHP/MySQL Object-relational mapping library. It started out as a personal and educational project, but turned into this little project you see here.
+MySimpleORM is a simple PHP/MySQL Object-relational mapping library. It is lightweight and tries to take care of as many things as possible. 
 
 ## Setting up MySimpleORM (MsORM)
-
-To be able to use the ORM, you need to have a PHP application and a MySQL database. Follow these simple guidelines to setup MsORM on your PHP web application.
+To be able to use the ORM, you need to have a PHP application and a MySQL/MariaDB database. Follow these simple guidelines to setup MsORM within your PHP web app.
 
 ## Installation
-
 The recommended method of installation is via [composer](https://getcomposer.org/)
 
-`composer require delirius325/mysimpleorm`
+`composer require mysimpleorm/mysimpleorm`
 
 ### Database-side guidelines
-
 1. The name of your tables are going to be the names of your object classes in PHP. Therefore, a table named "Users" will refer to the class "Users".
 
 
 ### Setup
 
-* 
+Add the following to your PHP class:
+
+1. `require 'vendor/autoload.php;`
+2. `use MySimpleORM\BaseClass;`
+3. `extends BaseClass`
+4. Change your `private` class attributes to `protected` to give access to the mapper.
+
+No need for getters/setters, the `BaseClass` provides you a generic methods.
 
 #### Example of a class
 
@@ -28,10 +32,10 @@ require 'vendor/autoload.php';
 use MySimpleORM\BaseClass;
 
 class MyClass extends BaseClass {
-  public $IDMyClass;
-  public $Name;
+  protected $IDMyClass;
+  protected $Name;
 
-  public function __construct() {
+  public function MyClass() {
     parent::__construct($this);
     $this->IDMyClass = 0;
     $this->Name = "";
@@ -48,6 +52,22 @@ class MyClass extends BaseClass {
 
 ## Documentation
 *The examples below are all used as if they were part of a function within a controller (MVC).
+
+### Generic get/set
+The ORM provides generic get & set methods to help alleviate the content of your class.
+
+#### Get
+```php
+$Users = new Users();
+$name = $Users->get('Name');
+// $class->get(attribute_name) => returns value of the attribute
+```
+#### Set
+```php
+$Users = new Users();
+$name = $Users->set('Name', 'foo');
+// $class->set(attribute_name, value) => sets the attribute to the value
+```
 
 ### Select
 #### To select an object by its ID
@@ -95,4 +115,5 @@ $Users->save(); // updated
 
 //Delete
 $Users->delete();
+// $Users is now undefined
 ```

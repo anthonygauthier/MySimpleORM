@@ -1,6 +1,10 @@
 language: php
 php:
   - 7.1
+services:
+  - mysql
+before_install:
+  - mysql -u root --password="" < tests/sql/travis.sql
 before_script:
   - curl -s http://getcomposer.org/installer | php
   - php composer.phar install  

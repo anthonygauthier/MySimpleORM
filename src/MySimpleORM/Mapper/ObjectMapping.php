@@ -29,9 +29,6 @@ class ObjectMapping implements ObjectMappingInterface
         $classPathArray = explode("\\", get_class($o));
         $this->ClassName = $classPathArray[sizeof($classPathArray) - 1];
         $this->Database = new Database();
-        if ($_ENV["MYSQL_HOST"] != "") {
-            $this->Database->setup();
-        }
         $this->Object = $o;
         if ($this->Database->connect()) {
             $this->PrimaryKey = $this->Database->getKeys($this->ClassName, "primary");
@@ -187,10 +184,8 @@ class ObjectMapping implements ObjectMappingInterface
      * @param [type] $obj
      * @return void
      */
-    public function deleteObject($obj = null)
+    public function deleteObject()
     {
-        $this->Object = ($obj != null) ? $obj : null;
-
         $where = array(
             array(
                 "column" => $this->PrimaryKey,
@@ -200,7 +195,7 @@ class ObjectMapping implements ObjectMappingInterface
         );
 
         $this->Database->delete($this->ClassName, $where);
-        $this->__destruct();
+        $this->Object->set($this->PrimaryKey, 0);
     }
     /**
      * Undocumented function
