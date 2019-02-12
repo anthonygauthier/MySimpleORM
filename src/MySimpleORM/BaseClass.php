@@ -83,6 +83,7 @@ class BaseClass
     {
         $this->Mapper->deleteObject($this);
         $this->Mapper->unsetObject($this);
+        var_dump($this);
     }
 
     /** Generic getter/setter **/

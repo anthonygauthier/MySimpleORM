@@ -204,7 +204,6 @@ class ObjectMapping implements ObjectMappingInterface
      */
     public function unsetObject(&$obj) {
         unset($obj);
-        var_dump($obj);
     }
     /**
      * Undocumented function
