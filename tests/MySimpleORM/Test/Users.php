@@ -6,9 +6,9 @@ use MySimpleORM\BaseClass;
 
 class Users extends BaseClass
 {
-    private $IDUsers;
-    private $username;
-    private $description;
+    protected $IDUsers;
+    protected $username;
+    protected $description;
 
     public function __construct()
     {
