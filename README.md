@@ -21,10 +21,11 @@ Add the following to your PHP class:
 2. `use MySimpleORM\BaseClass;`
 3. `extends BaseClass`
 4. Change your `private` class attributes to `protected` to give access to the mapper.
+5. Setup your MySQL/MariaDB information (check the example below)
 
 No need for getters/setters, the `BaseClass` provides you a generic methods.
 
-#### Example of a class
+#### Example
 
 ```php
 require 'vendor/autoload.php';
@@ -37,6 +38,19 @@ class MyClass extends BaseClass {
 
   public function MyClass() {
     parent::__construct($this);
+    /**
+    * There are two ways to connect the ORM to your Database.
+    *
+    * 1. Set the following environment variables:
+    *    - MYSQL_HOSTNAME
+    *    - MYSQL_USERNAME
+    *    - MYSQL_PASSWORD
+    *    - MYSQL_DATABASE
+    *    - MYSQL_PORT
+    *
+    * 2. Call the following method
+    *    - $this->Mapper->Database->setup($host, $user, $password, $db, $port);
+    */
     $this->IDMyClass = 0;
     $this->Name = "";
   }
