@@ -20,6 +20,7 @@ Add the following to your PHP class:
 1. `require 'vendor/autoload.php;`
 2. `use MySimpleORM\BaseClass;`
 3. `extends BaseClass`
+4. Change your `private` class attributes to `protected` to give access to the mapper.
 
 No need for getters/setters, the `BaseClass` provides you a generic methods.
 
@@ -31,8 +32,8 @@ require 'vendor/autoload.php';
 use MySimpleORM\BaseClass;
 
 class MyClass extends BaseClass {
-  private $IDMyClass;
-  private $Name;
+  protected $IDMyClass;
+  protected $Name;
 
   public function MyClass() {
     parent::__construct($this);
