@@ -184,7 +184,7 @@ class ObjectMapping implements ObjectMappingInterface
      * @param [type] $obj
      * @return void
      */
-    public function deleteObject($obj = null)
+    public function deleteObject(&$obj)
     {
         $where = array(
             array(
@@ -195,15 +195,8 @@ class ObjectMapping implements ObjectMappingInterface
         );
 
         $this->Database->delete($this->ClassName, $where);
-    }
-    /**
-     * unsetObject
-     * 
-     * @param [referenced object] &$obj
-     * @return void
-     */
-    public function unsetObject(&$obj) {
-        unset($obj);
+        $obj = null;
+        var_dump($obj);
     }
     /**
      * Undocumented function
