@@ -197,6 +197,15 @@ class ObjectMapping implements ObjectMappingInterface
         $this->Database->delete($this->ClassName, $where);
     }
     /**
+     * unsetObject
+     * 
+     * @param [referenced object] &$obj
+     * @return void
+     */
+    public function unsetObject(&$obj) {
+        unset($obj);
+    }
+    /**
      * Undocumented function
      *
      * @param [type] $obj - referenced object

@@ -82,6 +82,7 @@ class BaseClass
     public function delete()
     {
         $this->Mapper->deleteObject($this);
+        $this->Mapper->unsetObject($this);
     }
 
     /** Generic getter/setter **/
