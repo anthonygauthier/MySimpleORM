@@ -12,5 +12,5 @@ interface ObjectMappingInterface
     public function getObjectArray($wheres);
     public function insertObject();
     public function updateObject();
-    public function deleteObject();
+    public function deleteObject(&$obj);
 }
