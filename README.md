@@ -53,6 +53,22 @@ class MyClass extends BaseClass {
 ## Documentation
 *The examples below are all used as if they were part of a function within a controller (MVC).
 
+### Generic get/set
+The ORM provides generic get & set methods to help alleviate the content of your class.
+
+#### Get
+```php
+$Users = new Users();
+$name = $Users->get('Name');
+// $class->get(attribute_name) => returns value of the attribute
+```
+#### Set
+```php
+$Users = new Users();
+$name = $Users->set('Name', 'foo');
+// $class->set(attribute_name, value) => sets the attribute to the value
+```
+
 ### Select
 #### To select an object by its ID
 ```php
