@@ -48,11 +48,11 @@ class Database
             $this->Database = "travis";
             $this->MysqlPort = "3306";
         } else {
-            $this->Host = $host ?: getenv("MYSQL_HOST");
-            $this->User = $username ?: getenv("MYSQL_USERNAME");
-            $this->Password = $password ?: getenv("MYSQL_PASSWORD");
-            $this->Database = $database ?: getenv("MYSQL_DATABASE");
-            $this->MysqlPort = $port ?: getenv("MYSQL_PORT");
+            $this->Host = $host ?: getenv("DB_HOST");
+            $this->User = $username ?: getenv("DB_USERNAME");
+            $this->Password = $password ?: getenv("DB_PASSWORD");
+            $this->Database = $database ?: getenv("DB_DATABASE");
+            $this->MysqlPort = $port ?: getenv("DB_PORT");
         }
     }
 
