@@ -211,7 +211,7 @@ class ObjectMapping implements ObjectMappingInterface
 
         foreach ($rows as $row) {
             // reset the object reference
-            $class = get_class($o);
+            $class = get_class($obj);
             $this->Object = new $class();
             
             foreach ($attributes as $key => $attribute) {
