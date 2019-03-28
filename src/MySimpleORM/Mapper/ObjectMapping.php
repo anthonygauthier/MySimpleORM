@@ -209,9 +209,11 @@ class ObjectMapping implements ObjectMappingInterface
     {
         $attributes = $obj->getObjectAttributes($obj);
 
-        // $this->Object = new $this->ClassName();
-
         foreach ($rows as $row) {
+            // reset the object reference
+            $class = get_class($o);
+            $this->Object = new $class();
+            
             foreach ($attributes as $key => $attribute) {
                 //If object contains other objects
                 if (in_array($key, $this->ForeignKeys) && $key != $this->PrimaryKey) {

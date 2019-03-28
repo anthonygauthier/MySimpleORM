@@ -45,11 +45,11 @@ class MyClass extends BaseClass {
     * There are two ways to connect the ORM to your Database.
     *
     * 1. Set the following environment variables:
-    *    - MYSQL_HOSTNAME
-    *    - MYSQL_USERNAME
-    *    - MYSQL_PASSWORD
-    *    - MYSQL_DATABASE
-    *    - MYSQL_PORT
+    *    - DB_HOSTNAME
+    *    - DB_USERNAME
+    *    - DB_PASSWORD
+    *    - DB_DATABASE
+    *    - DB_PORT
     *
     * 2. Call the following method
     *    - $this->Mapper->Database->setup($host, $user, $password, $db, $port);
