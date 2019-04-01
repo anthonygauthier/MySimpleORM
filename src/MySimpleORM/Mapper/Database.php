@@ -105,6 +105,7 @@ class Database
         $return = array();
 
         if ($table != "" || $table != null) {
+            echo "selecting!!\n";
             //Open up connection
             $this->connect();
 
@@ -372,11 +373,14 @@ class Database
 
     public function getKeys($table, $type = "primary")
     {
+        $this->connect();
+
         if ($type == "primary") {
             $this->Sql = "SHOW COLUMNS FROM " . $table . ";";
             $results = $this->Instance->query($this->Sql);
             foreach ($results as $row) {
                 if ($row["Key"] == "PRI") {
+                    $this->disconnect();
                     return $row["Field"];
                 }
             }
@@ -398,7 +402,7 @@ class Database
                     $return[] = array($column_name);
                 }
             }
-
+            $this->disconnect();
             return $return;
         }
     }
