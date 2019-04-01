@@ -171,7 +171,7 @@ class ObjectMapping implements ObjectMappingInterface
      */
     public function saveObject()
     {
-        if (($this->Object->get($this->PrimaryKey) !== 0)) {
+        if (($this->Object->get($this->PrimaryKey) != 0)) {
             $this->updateObject($this->Object);
         } else {
             $this->insertObject($this->Object);
