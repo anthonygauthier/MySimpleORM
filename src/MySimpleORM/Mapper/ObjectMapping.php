@@ -30,10 +30,8 @@ class ObjectMapping implements ObjectMappingInterface
         $this->ClassName = $classPathArray[sizeof($classPathArray) - 1];
         $this->Database = new Database();
         $this->Object = $o;
-        if ($this->Database->connect()) {
-            $this->PrimaryKey = $this->Database->getKeys($this->ClassName, "primary");
-            $this->ForeignKeys = $this->Database->getKeys($this->ClassName, "foreign");
-        }
+        $this->PrimaryKey = $this->Database->getKeys($this->ClassName, "primary");
+        $this->ForeignKeys = $this->Database->getKeys($this->ClassName, "foreign");
     }
 
     public function __destruct()
