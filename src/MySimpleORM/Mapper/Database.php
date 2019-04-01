@@ -105,7 +105,6 @@ class Database
         $return = array();
 
         if ($table != "" || $table != null) {
-            echo "selecting!!\n";
             //Open up connection
             $this->connect();
 
