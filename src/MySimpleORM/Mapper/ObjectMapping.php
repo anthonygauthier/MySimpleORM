@@ -3,6 +3,7 @@ namespace MySimpleORM\Mapper;
 
 use MySimpleORM\Mapper\Database;
 use MySimpleORM\Mapper\ObjectMappingInterface;
+use MySimpleORM\Mapper\Transform;
 
 class ObjectMapping implements ObjectMappingInterface
 {
@@ -71,6 +72,7 @@ class ObjectMapping implements ObjectMappingInterface
      */
     public function getObjectArray($wheres = null)
     {
+        $wheres = Transform::split_conditions($wheres)
         $return = array();
         $rows = array();
 
