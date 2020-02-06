@@ -26,6 +26,7 @@
 
       // select assertion
       $this->assertNotNull($this->User);
+      var_dump($this->User);
 
        // update assertion
       $this->assertGreaterThan(0, $createdId);
