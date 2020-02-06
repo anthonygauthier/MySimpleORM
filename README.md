@@ -101,6 +101,10 @@ $wheres = array(
     "condition" => "=",
     "value" => 1 //keep in mind you could use a sub-query here
 );
+// OR
+$wheres = array(
+"IDCompanies,=,1"
+)
 $Users = $Users->getArray($wheres);
 ```
 You've just retrieved all the users that were part of the company "1". You're object ```$Users``` is now an array of ```Users```
